@@ -10,12 +10,15 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({ icon, label, onClick }
   return (
     <button
       onClick={onClick}
-      className="w-20 flex flex-col items-center gap-1 p-2 rounded hover:bg-blue-600/30 group transition-colors"
+      className="w-24 group flex flex-col items-center gap-1 p-1 rounded hover:bg-[#0b61ff]/20 focus:bg-[#0b61ff]/20 focus:outline-[1px] focus:outline-dotted focus:outline-white/50 transition-colors"
     >
-      <div className="w-12 h-12 flex items-center justify-center text-white drop-shadow-lg">
-        {icon}
-      </div>
-      <span className="text-white text-xs font-semibold text-center drop-shadow-md break-words leading-tight">
+      <div className="w-12 h-12 flex items-center justify-center filter drop-shadow-md">{icon}</div>
+      <span
+        className="text-white text-xs font-tahoma text-center px-1 rounded-sm
+                 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]
+                 group-hover:bg-[#0b61ff] group-focus:bg-[#0b61ff] line-clamp-2"
+        style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.8)' }}
+      >
         {label}
       </span>
     </button>
