@@ -89,47 +89,47 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen xp-desktop relative overflow-hidden">
-      <div className="absolute inset-0 pb-10">
+    <div className="min-h-screen xp-desktop relative overflow-hidden font-tahoma selection:bg-[#0b61ff] selection:text-white">
+      {/* Background Image */}
+      <div className="absolute inset-0 pb-[30px] pointer-events-none">
         <img
           src="images/wallpaper.jpg"
           alt="Desktop Background"
           className="w-full h-full object-cover"
-          style={{
-            filter: 'brightness(1.1) contrast(1.1) saturate(1.3)',
-          }}
         />
       </div>
 
-      <div className="relative z-10 p-4 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
+      {/* Desktop Icons Grid */}
+      <div className="relative z-10 p-4 grid grid-flow-col grid-rows-[repeat(auto-fill,100px)] gap-4 w-fit content-start h-[calc(100vh-40px)]">
         <DesktopIcon
-          icon={<img src="images/mypc.ico" alt="About Me" className="w-13 h-13" />}
+          icon={<img src="images/mypc.ico" alt="About Me" className="w-10 h-10" />}
           label="About Me"
           onClick={() => openWindow('about')}
         />
         <DesktopIcon
-          icon={<img src="images/world.ico" alt="Experience & Education" className="w-13 h-13" />}
+          icon={<img src="images/world.ico" alt="Experience" className="w-10 h-10" />}
           label="Experience & Education"
           onClick={() => openWindow('experience')}
         />
         <DesktopIcon
-          icon={<img src="images/folder.ico" alt="My Projects" className="w-13 h-13" />}
+          icon={<img src="images/folder.ico" alt="Projects" className="w-10 h-10" />}
           label="My Projects"
           onClick={() => openWindow('projects')}
         />
         <DesktopIcon
-          icon={<img src="images/phone.ico" alt="Contact" className="w-13 h-13" />}
+          icon={<img src="images/phone.ico" alt="Contact" className="w-10 h-10" />}
           label="Contact"
           onClick={() => openWindow('contact')}
         />
       </div>
 
-      <div className="relative z-20">
+      <div className="absolute inset-0 z-20 pointer-events-none">
         {openWindows.map((window) => (
           <div
             key={window.id}
             onClick={() => handleWindowClick(window.id)}
             style={{ zIndex: activeWindow === window.id ? 30 : 20 }}
+            className="pointer-events-auto"
           >
             <Window
               title={window.title}

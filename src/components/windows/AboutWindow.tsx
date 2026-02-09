@@ -20,60 +20,63 @@ interface AboutWindowProps {
 
 export const AboutWindow: React.FC<AboutWindowProps> = ({ data }) => {
   return (
-    <div className="space-y-4">
-      <div className="bg-white rounded-lg p-6 shadow-md border-2 border-[#0831D9]">
-        <div className="flex flex-col md:flex-row gap-6">
-          <img
-            src={'images/' + data.personal.avatar}
-            alt={data.personal.fullname}
-            className="w-32 h-32 rounded-lg object-cover border-4 border-[#3A8CFF]"
-          />
+    <div className="space-y-4 font-tahoma text-[11px] sm:text-[12px]">
+      <div className="bg-white p-4">
+        <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="p-1 bg-white border border-[#D4D0C8] shadow-sm">
+            <img
+              src={'images/' + data.personal.avatar}
+              alt={data.personal.fullname}
+              className="w-32 h-32 object-cover border border-[#808080]"
+            />
+          </div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-[#0831D9] mb-1">{data.personal.fullname}</h2>
-            <p className="text-lg text-gray-700 mb-3">{data.personal.title}</p>
-            <p className="text-gray-600 leading-relaxed">{data.personal.bio}</p>
+            <h2 className="text-lg font-bold text-black mb-1">{data.personal.fullname}</h2>
+            <p className="text-[#555] mb-3 italic">{data.personal.title}</p>
+            <p className="text-black leading-relaxed">{data.personal.bio}</p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg p-6 shadow-md border-2 border-[#0831D9]">
-        <h3 className="text-xl font-bold text-[#0831D9] mb-4">Contact Information</h3>
-        <div className="space-y-2 text-gray-700">
-          <p>
-            <span className="font-semibold">Location:</span> {data.personal.location}
+      <fieldset className="border border-[#D4D0C8] p-4 rounded-[3px]">
+        <legend className="text-[#003399] px-1 font-bold ml-2">Contact Information</legend>
+        <div className="space-y-2 text-black pl-2">
+          <p className="flex items-center gap-2">
+            <span className="font-bold w-20">Location:</span>
+            <span>{data.personal.location}</span>
           </p>
-          <p>
-            <span className="font-semibold">Email:</span>{' '}
+          <p className="flex items-center gap-2">
+            <span className="font-bold w-20">Email:</span>
             <a href={`mailto:${data.personal.email}`} className="text-blue-600 hover:underline">
               {data.personal.email}
             </a>
           </p>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="bg-white rounded-lg p-6 shadow-md border-2 border-[#0831D9]">
-        <h3 className="text-xl font-bold text-[#0831D9] mb-4">Connect With Me</h3>
-        <div className="flex gap-4">
+      <fieldset className="border border-[#D4D0C8] p-4 rounded-[3px]">
+        <legend className="text-[#003399] px-1 font-bold ml-2">Connect</legend>
+        <div className="flex gap-4 pl-2">
           <a
             href={data.social.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors"
+            className="xp-button flex items-center gap-2 active:translate-y-[1px]"
           >
-            <Github size={20} />
+            <Github size={16} />
             <span>GitHub</span>
           </a>
           <a
             href={data.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            className="xp-button flex items-center gap-2 active:translate-y-[1px]"
           >
-            <Linkedin size={20} />
+            <Linkedin size={16} />
             <span>LinkedIn</span>
           </a>
         </div>
-      </div>
+      </fieldset>
     </div>
   );
 };

@@ -10,27 +10,30 @@ interface ContactWindowProps {
 
 export const ContactWindow: React.FC<ContactWindowProps> = ({ data }) => {
   return (
-    <div className="space-y-4">
-      <div className="bg-white rounded-lg p-4 shadow-md border-2 border-[#0831D9]">
-        <h2 className="text-2xl font-bold text-[#0831D9] mb-2">Get In Touch</h2>
-        <p className="text-gray-600">Feel free to reach out for collaborations or inquiries</p>
+    <div className="space-y-4 font-tahoma text-[11px] sm:text-[12px]">
+      <div className="bg-[#FFFFE1] border border-[#ACA899] p-2 flex items-center gap-2 mb-4">
+        <div className="text-blue-600 font-bold text-lg">ⓘ</div>
+        <div className="text-black">
+          <p className="font-bold">Get In Touch</p>
+          <p className="text-[10px]">Feel free to reach out for collaborations or inquiries</p>
+        </div>
       </div>
 
-      <div className="bg-white rounded-lg p-6 shadow-md border-2 border-[#0831D9]">
-        <h3 className="text-xl font-bold text-[#0831D9] mb-4">Contact Information</h3>
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 text-gray-700">
-            <Mail className="text-[#3A8CFF]" size={20} />
-            <a href={`mailto:${data.email}`} className="hover:underline">
+      <fieldset className="border border-[#D4D0C8] p-4 rounded-[3px]">
+        <legend className="text-[#003399] px-1 font-bold ml-2">Contact Information</legend>
+        <div className="space-y-3 pl-2">
+          <div className="flex items-center gap-3 text-black">
+            <Mail className="text-[#003399]" size={16} />
+            <a href={`mailto:${data.email}`} className="hover:underline text-blue-600">
               {data.email}
             </a>
           </div>
-          <div className="flex items-center gap-3 text-gray-700">
-            <MapPin className="text-[#3A8CFF]" size={20} />
+          <div className="flex items-center gap-3 text-black">
+            <MapPin className="text-[#003399]" size={16} />
             <span>{data.location}</span>
           </div>
         </div>
-      </div>
+      </fieldset>
     </div>
   );
 };
