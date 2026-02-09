@@ -82,8 +82,8 @@ describe('ProjectsWindow', () => {
   it('renders project links with correct attributes', () => {
     render(<ProjectsWindow projects={mockProjects} />);
 
-    // Get all links with "View Project" text
-    const projectLinks = screen.getAllByRole('link', { name: /View Project/ });
+    // Get all links with "Open" text
+    const projectLinks = screen.getAllByRole('link', { name: /Open/i });
 
     // Verify that we have the expected number of links
     expect(projectLinks).toHaveLength(mockProjects.length);
