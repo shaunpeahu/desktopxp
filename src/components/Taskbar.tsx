@@ -124,16 +124,18 @@ export const Taskbar: React.FC<TaskbarProps> = ({
               onClick={() => onWindowClick(window.id)}
               className={`
                 group h-[22px] min-w-[150px] max-w-[200px] px-2 flex items-center gap-2 rounded-[2px] transition-all
-                ${activeWindow === window.id
-                  ? 'bg-[#1e52b7] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.5),_1px_0_0_rgba(255,255,255,0.2)]' // Pushed in
-                  : 'bg-[#3C81F3] hover:bg-[#5394FF] shadow-[inset_1px_1px_0_rgba(255,255,255,0.3),_1px_1px_2px_rgba(0,0,0,0.5)]' // Popped out
+                ${
+                  activeWindow === window.id
+                    ? 'bg-[#1e52b7] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.5),_1px_0_0_rgba(255,255,255,0.2)]' // Pushed in
+                    : 'bg-[#3C81F3] hover:bg-[#5394FF] shadow-[inset_1px_1px_0_rgba(255,255,255,0.3),_1px_1px_2px_rgba(0,0,0,0.5)]' // Popped out
                 }
               `}
             >
               <div className="w-4 h-4 shrink-0">{window.icon}</div>
               <span
-                className={`text-[11px] truncate ${activeWindow === window.id ? 'font-bold text-white/90' : 'text-white'
-                  }`}
+                className={`text-[11px] truncate ${
+                  activeWindow === window.id ? 'font-bold text-white/90' : 'text-white'
+                }`}
               >
                 {window.title}
               </span>
