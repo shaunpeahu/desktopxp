@@ -22,3 +22,6 @@ coverage
 *.sln
 *.sw?
 .env
+*Zone.Identifier
+*.bak
+*~ 
