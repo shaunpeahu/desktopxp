@@ -1,59 +1,124 @@
-import React from 'react';
-import portfolioData from '../data/portfolio.json';
+import React from "react";
 
-const LoadingScreen: React.FC = () => (
-  <>
-    <style>
-      {`
-        .crt-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 10000;
+type Mode = "boot" | "welcome";
 
-          /* Bold grey scanlines: 2px dark grey every 4px */
-          background: repeating-linear-gradient(
-            to bottom,
-            transparent,
-            transparent 2px,
-            rgba(80, 80, 80, 0.25) 2px,   /* medium grey */
-            rgba(80, 80, 80, 0.25) 4px
-          );
+type Props = {
+  mode?: Mode;
 
-          /* Blocky noise for "pixel" texture (larger grain) */
-          background-image: 
-            repeating-linear-gradient(
-              to bottom,
-              transparent,
-              transparent 2px,
-              rgba(80, 80, 80, 0.25) 2px,
-              rgba(80, 80, 80, 0.25) 4px
-            ),
-            background-image: repeating-linear-gradient(...), url("images/noise.svg");        
-          }
-      `}
-    </style>
+  // Images are served from /public/images → /images/...
+  // You can pass "welcome-bg.jpg" or "/images/welcome-bg.jpg"
+  background?: string;
 
-    <div className="fixed inset-0 bg-black flex flex-col items-center justify-center z-[9999]">
-      <img src="images/xp-loading.png" alt="Logo" className="h-[15%]" draggable={false} />
-      <div className="flex items-end">
-        <span className="font-franklin text-5xl font-semibold text-[#eeeeee]">
-          {portfolioData.loadingScreen.name}
-        </span>
-        <span className="font-franklin text-[#ff701d] text-3xl font-bold ml-2 mb-5">
-          {portfolioData.loadingScreen.lastname}
-        </span>
-      </div>
-      <div className="mt-20">
-        <img src="images/initial-loading.gif" alt="bar-loading" draggable={false} className="h-6" />
-      </div>
+  // Boot-only: optional centered GIF (e.g., "initial-loading.gif")
+  centerGif?: string;
+
+  // Boot-only: small label shown near bottom center (e.g., "Starting Windows…")
+  label?: string;
+
+  // Welcome-only: big centered XP-like text (e.g., "Welcome")
+  welcomeText?: string;
+
+  // Optional version text in bottom-left (e.g., "ShaunOS v1.5")
+  versionText?: string;
+};
+
+/**
+ * Build a public URL that works in dev + production even when deployed under a sub-path.
+ * Vite serves /public/* at the web root. So /public/images/foo.jpg becomes /images/foo.jpg.
+ */
+function publicImg(pathOrFile: string) {
+  const base = (import.meta as any).env?.BASE_URL || "/";
+
+  const p = pathOrFile.startsWith("/")
+    ? pathOrFile
+    : `/images/${pathOrFile.replace(/^images\//, "")}`;
+
+  return `${base.replace(/\/$/, "")}${p}`;
+}
+
+export default function LoadingScreen({
+  mode = "boot",
+  background = mode === "boot" ? "boot-bg.jpg" : "welcome-bg.jpg",
+  centerGif,
+  label = "Starting Windows…",
+  welcomeText = "Welcome",
+  versionText,
+}: Props) {
+  return (
+    <div className="fixed inset-0 z-[9999] bg-black overflow-hidden">
+      {/* Background */}
+      <img
+        src={publicImg(background)}
+        alt={mode === "boot" ? label : welcomeText}
+        className="absolute inset-0 w-full h-full object-cover"
+        draggable={false}
+      />
+
+      {/* BOOT: centered GIF (optional) */}
+      {mode === "boot" && centerGif && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src={publicImg(centerGif)}
+            alt=""
+            className="w-[240px] h-auto"
+            draggable={false}
+          />
+        </div>
+      )}
+
+      {/* WELCOME: big centered XP-like text */}
+      {mode === "welcome" && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div
+            className="select-none"
+            style={{
+              fontFamily: "Tahoma, Verdana, Arial, sans-serif",
+              fontSize: 44,
+              fontWeight: 700,
+              letterSpacing: 0.2,
+              color: "rgba(255,255,255,0.95)",
+              textShadow:
+                "0 2px 0 rgba(0,0,0,0.55), 0 10px 28px rgba(0,0,0,0.55)",
+            }}
+          >
+            {welcomeText}
+          </div>
+        </div>
+      )}
+
+      {/* BOOT: small label near bottom center */}
+      {mode === "boot" && !!label && (
+        <div className="absolute bottom-10 left-0 right-0 flex justify-center">
+          <span
+            className="select-none"
+            style={{
+              fontFamily: "Tahoma, Verdana, Arial, sans-serif",
+              fontSize: 13,
+              color: "rgba(255,255,255,0.9)",
+              textShadow: "0 1px 2px rgba(0,0,0,0.75)",
+            }}
+          >
+            {label}
+          </span>
+        </div>
+      )}
+
+      {/* Version text (bottom-left) */}
+      {!!versionText && (
+        <div className="absolute bottom-8 left-6 select-none">
+          <span
+            style={{
+              fontFamily: "Tahoma, Verdana, Arial, sans-serif",
+              fontSize: 11,
+              color: "rgba(255,255,255,0.85)",
+              textShadow: "0 1px 2px rgba(0,0,0,0.7)",
+              letterSpacing: 0.2,
+            }}
+          >
+            {versionText}
+          </span>
+        </div>
+      )}
     </div>
-
-    <div className="crt-overlay" />
-  </>
-);
-
-export default LoadingScreen;
+  );
+}
